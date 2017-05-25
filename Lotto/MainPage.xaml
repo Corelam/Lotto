@@ -27,7 +27,12 @@
                         <Button x:Name="saveToFileButton" FontFamily="Segoe MDL2 Assets" Content="&#xE74E;" Width="50" Height="50" Background="Transparent" Click="saveToFileButton_Click"/>
                         <TextBlock Text="Zapisz do pliku" FontSize="16" VerticalAlignment="Center" />
                     </StackPanel>
-                    
+
+                    <StackPanel Orientation="Horizontal">
+                        <Button x:Name="getHtmlButton" FontFamily="Segoe MDL2 Assets" Content="&#xE71E;" Width="50" Height="50" Background="Transparent" Click="getHtmlButton_Click" />
+                        <TextBlock Text="Sprawdź wyniki Lotto" FontSize="16" VerticalAlignment="Center" />
+                    </StackPanel>
+
                 </StackPanel>
             </SplitView.Pane>
             <SplitView.Content>
@@ -104,6 +109,15 @@
 
                 </Grid>
 
+                <Grid Grid.Row="3">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+
+                    <Button x:Name="readFromFileButton" Margin="15,120,15,120" Content="Wczytaj z pliku" Grid.Column="0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Click="readFromFileButton_Click"/>
+                </Grid>
+                
                 <Grid Grid.Row="4">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="*" />
