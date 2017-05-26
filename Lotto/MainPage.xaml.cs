@@ -59,25 +59,21 @@ namespace Lotto
         {
             displayGameType.Text = "Lotto";
             playerInstruction.Text = "Losowanie 6 liczb - od 1 do 46";
-            BallsVisibility(0);
-            ClearBalls();
+            BallsVisible(false);
         }
 
         private void multimultiButton_Click(object sender, RoutedEventArgs e)
         {
             displayGameType.Text = "Multi Multi";
             playerInstruction.Text = "Losowanie 10 liczb - od 1 do 80";
-            BallsVisibility();
-            ClearBalls();
+            BallsVisible(true);
         }
 
         private void getHtmlButton_Click(object sender, RoutedEventArgs e)
         {
             displayGameType.Text = "Najświeższe wyniki losowania";
             playerInstruction.Text = "Lotto";
-            playerInstruction.Text = "";
-            ClearBalls();
-            BallsVisibility(0);
+            BallsVisible(false);
             GetOnlineResults_Lotto();
         }
 
@@ -100,6 +96,12 @@ namespace Lotto
         private void readFromFileButton_Click(object sender, RoutedEventArgs e)
         {
             ReadFromFile();
+            LoadedBallsVisible(true);
+        }
+        
+        private void clearReadButton_Click(object sender, RoutedEventArgs e)
+        {
+            LoadedBallsVisible(false);
         }
 
         private void randomButton_Click(object sender, RoutedEventArgs e)
@@ -125,7 +127,7 @@ namespace Lotto
         }
         
         /// <summary> Metoda czyszcząca wylosowane liczby z kul. </summary>
-        private void ClearBalls()
+        private void BallsClear()
         {
             TextBlock[] balls = { ball1, ball2, ball3, ball4, ball5, ball6, ball7, ball8, ball9, ball10 };
 
@@ -134,22 +136,82 @@ namespace Lotto
                 ball.Text = "";
             }
         }
+
+        /// <summary> Metoda do ukrywania lub pokazywania kul 7-10. </summary>
+        private void BallsVisible(bool visible)
+        {
+            if (visible)
+            {
+                BallsClear();
+                BallsVisibility(100);
+            }
+            else
+            {
+                BallsClear();
+                BallsVisibility(0);
+            }
+        }
+        
+        /// <summary> Metoda czyszcząca wczytane liczby z kul. </summary>
+        private void LoadedBallsClear()
+        {
+            TextBlock[] balls = { loadedBall1, loadedBall2, loadedBall3, loadedBall4, loadedBall5, loadedBall6, loadedBall7, loadedBall8, loadedBall9, loadedBall10 };
+
+            foreach (TextBlock ball in balls)
+            {
+                ball.Text = "";
+            }
+        }
+
+        /// <summary> Metoda do ukrywania kul z wczytanymi liczbami. </summary>
+        private void LoadedBallsVisibility(int value = 100)
+        {
+            loadedBall1shape.Opacity = value;
+            loadedBall2shape.Opacity = value;
+            loadedBall3shape.Opacity = value;
+            loadedBall4shape.Opacity = value;
+            loadedBall5shape.Opacity = value;
+            loadedBall6shape.Opacity = value;
+            loadedBall7shape.Opacity = value;
+            loadedBall8shape.Opacity = value;
+            loadedBall9shape.Opacity = value;
+            loadedBall10shape.Opacity = value;
+        }
+
+        /// <summary> Metoda do ukrywania lub pokazywania kul z wczytanymi liczbami. </summary>
+        private void LoadedBallsVisible(bool visible)
+        {
+            if (visible)
+            {
+                LoadedBallsVisibility(100);
+            }
+            else
+            {
+                LoadedBallsVisibility(0);
+                LoadedBallsClear();
+            }
+        }
         #endregion
 
         /// <summary> Metoda generująca i przypisująca losowe liczby do kul. </summary>
         private void RandomNumbers(string drawType)
         {
             TextBlock[] balls;
+            List<int> possible;
 
             if (drawType.Equals("Lotto"))
             {
                 numbers = new int[6];
                 balls = new TextBlock[] { ball1, ball2, ball3, ball4, ball5, ball6 };
+
+                possible = Enumerable.Range(1, 46).ToList();
             }
             else if (drawType.Equals("Multi Multi"))
             {
                 numbers = new int[10];
                 balls = new TextBlock[] { ball1, ball2, ball3, ball4, ball5, ball6, ball7, ball8, ball9, ball10 };
+
+                possible = Enumerable.Range(1, 80).ToList();
             }
             else
             {
@@ -158,7 +220,9 @@ namespace Lotto
 
             for (int i = 0; i < numbers.Length; i++)
             {
-                numbers[i] = randomGenerator.Next(1, 47);
+                int index = randomGenerator.Next(0, possible.Count);
+                numbers[i] = possible[index];
+                possible.RemoveAt(index);
             }
 
             int j = 0;
@@ -227,7 +291,8 @@ namespace Lotto
                 var stream = await file.OpenAsync(FileAccessMode.Read);
                 using (StreamReader reader = new StreamReader(stream.AsStream()))
                 {
-                    playerInstruction.Text = reader.ReadToEnd();
+                    string filetext = reader.ReadToEnd();
+                    UpdateBallsFromFile(filetext);
                 }
             }
             else
@@ -293,19 +358,70 @@ namespace Lotto
         {
             TextBlock[] balls = { ball1, ball2, ball3, ball4, ball5, ball6 };
 
-            //string[] onlineNumbers = text.Split(' ');
-
             int i = 0;
             foreach (TextBlock ball in balls)
             {
                 ball.Text = numbers[i];
-                Debug.WriteLine(numbers[i]);
                 i++;
+            }
+        }
+
+        /// <summary> Metoda zapisuje na kulach 6 lub 10 wczytanych z pliku liczb. </summary>
+        private void UpdateBallsFromFile(string text)
+        {
+            try {
+                string newText = "";
+
+                foreach (char letter in text)
+                {
+                    if (letter.Equals(','))
+                    {
+                        continue;
+                    }
+                    newText += letter;
+                }
+                
+                string[] numbers = newText.Split(' ');
+
+                try
+                {
+                    for (int check = 0; check < numbers.Length - 1; check++)
+                    {
+                        int test = Int32.Parse(numbers[check]);
+                    }
+                }
+                catch
+                {
+                    ShowToastNotification("Błąd odczytu pliku.", "Podany plik zawiera znaki inne niż liczby.");
+                    return;
+                }
+
+                TextBlock[] balls = { };
+
+                if (numbers.Length.Equals(7))
+                {
+                    balls = new TextBlock[] { loadedBall1, loadedBall2, loadedBall3, loadedBall4, loadedBall5, loadedBall6 };
+                }
+                else if (numbers.Length.Equals(11))
+                {
+                    balls = new TextBlock[] { loadedBall1, loadedBall2, loadedBall3, loadedBall4, loadedBall5, loadedBall6, loadedBall7, loadedBall8, loadedBall9, loadedBall10 };
+                }
+                else
+                {
+                    ShowToastNotification("Błąd odczytu pliku.", "UpdateBallsFromFile failed.");
+                }
+
+                int i = 0;
+                foreach (TextBlock ball in balls)
+                {
+                    ball.Text = numbers[i];
+                    i++;
+                }
+            }
+            catch
+            {
+                ShowToastNotification("Błąd odczytu pliku", "");
             }
         }
     }
 }
-
-
-
-// ZLIKWIDOWAC POWTARZANIE SIE LICZB

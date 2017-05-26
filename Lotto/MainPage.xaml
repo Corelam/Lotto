@@ -48,6 +48,8 @@
                     <RowDefinition Height="75" />
                     <RowDefinition Height="60" />
                     <RowDefinition Height="*" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="60" />
                     <RowDefinition Height="100" />                    
                 </Grid.RowDefinitions>
 
@@ -66,22 +68,22 @@
                         <ColumnDefinition Width="*" />
                     </Grid.ColumnDefinitions>
 
-                    <Ellipse Fill="SteelBlue" Grid.Column="0" Height="50" Width="50" />
+                    <Ellipse Fill="Yellow" Grid.Column="0" Height="50" Width="50" />
                     <TextBlock x:Name="ball1" Grid.Column="0" Text="" FontSize="20" TextAlignment="Center" VerticalAlignment="Center" />
-                    
-                    <Ellipse Fill="SteelBlue" Grid.Column="1" Height="50" Width="50" />
+
+                    <Ellipse Fill="Yellow" Grid.Column="1" Height="50" Width="50" />
                     <TextBlock x:Name="ball2" Grid.Column="1" Text="" FontSize="20" TextAlignment="Center" VerticalAlignment="Center" />
-                    
-                    <Ellipse Fill="SteelBlue" Grid.Column="2" Height="50" Width="50" />
+
+                    <Ellipse Fill="Yellow" Grid.Column="2" Height="50" Width="50" />
                     <TextBlock x:Name="ball3" Grid.Column="2" Text="" FontSize="20" TextAlignment="Center" VerticalAlignment="Center" />
-                    
-                    <Ellipse Fill="SteelBlue" Grid.Column="3" Height="50" Width="50" />
+
+                    <Ellipse Fill="Yellow" Grid.Column="3" Height="50" Width="50" />
                     <TextBlock x:Name="ball4" Grid.Column="3" Text="" FontSize="20" TextAlignment="Center" VerticalAlignment="Center" />
-                    
-                    <Ellipse Fill="SteelBlue" Grid.Column="4" Height="50" Width="50" />
+
+                    <Ellipse Fill="Yellow" Grid.Column="4" Height="50" Width="50" />
                     <TextBlock x:Name="ball5" Grid.Column="4" Text="" FontSize="20" TextAlignment="Center" VerticalAlignment="Center" />
-                    
-                    <Ellipse Fill="SteelBlue" Grid.Column="5" Height="50" Width="50" />
+
+                    <Ellipse Fill="Yellow" Grid.Column="5" Height="50" Width="50" />
                     <TextBlock x:Name="ball6" Grid.Column="5" Text="" FontSize="20" TextAlignment="Center" VerticalAlignment="Center" />
                 </Grid>
 
@@ -95,18 +97,17 @@
                         <ColumnDefinition Width="*" />
                     </Grid.ColumnDefinitions>
 
-                    <Ellipse x:Name="ball7shape"  Fill="SteelBlue" Grid.Column="1" Height="50" Width="50" />
+                    <Ellipse x:Name="ball7shape"  Fill="Yellow" Grid.Column="1" Height="50" Width="50" />
                     <TextBlock x:Name="ball7" Grid.Column="1" Text="" FontSize="20" TextAlignment="Center" VerticalAlignment="Center" />
 
-                    <Ellipse x:Name="ball8shape"  Fill="SteelBlue" Grid.Column="2" Height="50" Width="50" />
+                    <Ellipse x:Name="ball8shape"  Fill="Yellow" Grid.Column="2" Height="50" Width="50" />
                     <TextBlock x:Name="ball8" Grid.Column="2" Text="" FontSize="20" TextAlignment="Center" VerticalAlignment="Center" />
 
-                    <Ellipse x:Name="ball9shape"  Fill="SteelBlue" Grid.Column="3" Height="50" Width="50" />
+                    <Ellipse x:Name="ball9shape"  Fill="Yellow" Grid.Column="3" Height="50" Width="50" />
                     <TextBlock x:Name="ball9" Grid.Column="3" Text="" FontSize="20" TextAlignment="Center" VerticalAlignment="Center" />
 
-                    <Ellipse x:Name="ball10shape" Fill="SteelBlue" Grid.Column="4" Height="50" Width="50" />
+                    <Ellipse x:Name="ball10shape" Fill="Yellow" Grid.Column="4" Height="50" Width="50" />
                     <TextBlock x:Name="ball10" Grid.Column="4" Text="" FontSize="20" TextAlignment="Center" VerticalAlignment="Center" />
-
                 </Grid>
 
                 <Grid Grid.Row="3">
@@ -115,10 +116,63 @@
                         <ColumnDefinition Width="*" />
                     </Grid.ColumnDefinitions>
 
-                    <Button x:Name="readFromFileButton" Margin="15,120,15,120" Content="Wczytaj z pliku" Grid.Column="0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Click="readFromFileButton_Click"/>
+                    <Button x:Name="readFromFileButton" Margin="10,100,10,5" Content="Wczytaj z pliku" Grid.Column="0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Click="readFromFileButton_Click"/>
+                    <Button x:Name="clearReadButton" Margin="10,100,10,5" Content="Wyczyść" Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Click="clearReadButton_Click" />
                 </Grid>
-                
-                <Grid Grid.Row="4">
+
+                <Grid Grid.Row="4" Margin="5,12.5,5,12.5">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+
+                    <Ellipse x:Name="loadedBall1shape" Fill="SteelBlue" Grid.Column="0" Height="50" Width="50" Opacity="0" />
+                    <TextBlock x:Name="loadedBall1" Grid.Column="0" Text="" FontSize="20" TextAlignment="Center" VerticalAlignment="Center" />
+
+                    <Ellipse x:Name="loadedBall2shape" Fill="SteelBlue" Grid.Column="1" Height="50" Width="50" Opacity="0" />
+                    <TextBlock x:Name="loadedBall2" Grid.Column="1" Text="" FontSize="20" TextAlignment="Center" VerticalAlignment="Center" />
+
+                    <Ellipse x:Name="loadedBall3shape" Fill="SteelBlue" Grid.Column="2" Height="50" Width="50" Opacity="0" />
+                    <TextBlock x:Name="loadedBall3" Grid.Column="2" Text="" FontSize="20" TextAlignment="Center" VerticalAlignment="Center" />
+
+                    <Ellipse x:Name="loadedBall4shape" Fill="SteelBlue" Grid.Column="3" Height="50" Width="50" Opacity="0" />
+                    <TextBlock x:Name="loadedBall4" Grid.Column="3" Text="" FontSize="20" TextAlignment="Center" VerticalAlignment="Center" />
+
+                    <Ellipse x:Name="loadedBall5shape" Fill="SteelBlue" Grid.Column="4" Height="50" Width="50" Opacity="0" />
+                    <TextBlock x:Name="loadedBall5" Grid.Column="4" Text="" FontSize="20" TextAlignment="Center" VerticalAlignment="Center" />
+
+                    <Ellipse x:Name="loadedBall6shape" Fill="SteelBlue" Grid.Column="5" Height="50" Width="50" Opacity="0" />
+                    <TextBlock x:Name="loadedBall6" Grid.Column="5" Text="" FontSize="20" TextAlignment="Center" VerticalAlignment="Center" />
+                </Grid>
+
+                <Grid Grid.Row="5" Margin="5,0,5,0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+
+                    <Ellipse x:Name="loadedBall7shape"  Fill="SteelBlue" Grid.Column="1" Height="50" Width="50" Opacity="0" />
+                    <TextBlock x:Name="loadedBall7" Grid.Column="1" Text="" FontSize="20" TextAlignment="Center" VerticalAlignment="Center" />
+
+                    <Ellipse x:Name="loadedBall8shape"  Fill="SteelBlue" Grid.Column="2" Height="50" Width="50" Opacity="0" />
+                    <TextBlock x:Name="loadedBall8" Grid.Column="2" Text="" FontSize="20" TextAlignment="Center" VerticalAlignment="Center" />
+
+                    <Ellipse x:Name="loadedBall9shape"  Fill="SteelBlue" Grid.Column="3" Height="50" Width="50" Opacity="0" />
+                    <TextBlock x:Name="loadedBall9" Grid.Column="3" Text="" FontSize="20" TextAlignment="Center" VerticalAlignment="Center" />
+
+                    <Ellipse x:Name="loadedBall10shape" Fill="SteelBlue" Grid.Column="4" Height="50" Width="50" Opacity="0" />
+                    <TextBlock x:Name="loadedBall10" Grid.Column="4" Text="" FontSize="20" TextAlignment="Center" VerticalAlignment="Center" />
+                </Grid>
+
+                <Grid Grid.Row="6">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="*" />
                     </Grid.ColumnDefinitions>
